@@ -1,0 +1,2 @@
+# 忽略mysql数据文件（pull镜像时会自动生成）
+/mysql/data/*
