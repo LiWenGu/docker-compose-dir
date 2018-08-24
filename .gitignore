@@ -2,3 +2,4 @@
 /mysql/data/*
 # 忽略mongo数据文件（pull镜像时会自动生成）
 /mongo/data/*
+!.keep
