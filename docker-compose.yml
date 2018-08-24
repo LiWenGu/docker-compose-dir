@@ -11,7 +11,18 @@ services:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/conf/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
     environment:
-      MYSQL_ROOT_PASSWORD: "123456" 
+      MYSQL_ROOT_PASSWORD: "123456"
+  mongo:
+    image: mongo:4
+    container_name: mongo_compose
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: "123456"
+    volumes:
+        - ./mongo/data:/data/db
   nginx:
     image: nginx:1.14.0
     container_name: nginx_compose
