@@ -18,9 +18,9 @@ services:
     restart: always
     ports:
       - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: "123456"
+    #environment:
+    #  MONGO_INITDB_ROOT_USERNAME: leanote
+    #  MONGO_INITDB_ROOT_PASSWORD: leanote
     volumes:
         - ./mongo/data:/data/db
   nginx:
@@ -36,3 +36,23 @@ services:
       - ./nginx/conf:/etc/nginx/conf.d
       - ./nginx/www:/etc/nginx/www
       - ./nginx/logs:/etc/nginx/logs
+  leanote:
+    image: zuolan/leanote
+    container_name: leanote_app_compose
+    restart: always
+    ports:
+      - 9000:9000
+    volumes:
+      - ./leanote/conf/app.conf:/leanote/conf/app.conf
+      - ./leanote/dataupload:/leanote/public/upload
+    links:
+      - mongo
+  init_leanote_db:
+    image: mongo:4
+    links:
+      - mongo
+    volumes:
+      - ./leanote/initdb.sh:/initdb.sh
+      - ./leanote/mongodb_backup/leanote_install_data:/mongodb_backup/leanote_install_data
+      - ./leanote/data:/data/db
+    command: sh /initdb.sh

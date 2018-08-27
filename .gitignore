@@ -1,5 +1,7 @@
 # 忽略mysql数据文件（pull镜像时会自动生成）
-/mysql/data/*
+/mysql/data
 # 忽略mongo数据文件（pull镜像时会自动生成）
-/mongo/data/*
+/mongo/data
+# 忽略 leanote mongodb 初始文件（执行命令自动获取生成）
+/leanote/mongodb_backup
 !.keep
