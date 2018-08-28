@@ -24,7 +24,7 @@ services:
     volumes:
         - ./mongo/data:/data/db
   nginx:
-    image: nginx:1.14.0
+    image: nginx:1.14.0-alpine
     container_name: nginx_compose
     restart: always
     ports:
@@ -33,7 +33,9 @@ services:
       - 5050:5050
       - 4040:4040
     volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/nginx.pid:/etc/nginx/nginx.pid
       - ./nginx/www:/etc/nginx/www
       - ./nginx/logs:/etc/nginx/logs
   leanote:
@@ -41,12 +43,13 @@ services:
     container_name: leanote_app_compose
     restart: always
     ports:
-      - 9000:9000
+      - 9000
     volumes:
       - ./leanote/conf/app.conf:/leanote/conf/app.conf
       - ./leanote/dataupload:/leanote/public/upload
     links:
       - mongo
+      - nginx
   init_leanote_db:
     image: mongo:4
     links:
